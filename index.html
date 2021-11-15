@@ -8,23 +8,34 @@
             justify-content: center;
             align-items: center;
             height: 100%;
+
+            font-size: 8vmin;
+        }
+        .type > input[type=radio] {
+            height: 4vmin;
+            width: 4vmin;
         }
         #button {
+            margin-top: 4vmin;
             padding: 4vmin;
             font-size: 8vmin;
         }
-        #text {
+        #result {
             margin-top: 4vmin;
-            font-size: 8vmin;
         }
     </style>
     <script>
         function getCode() {
             const button = document.getElementById("button");
             button.disabled = true;
-            const text = document.getElementById("text");
-            text.textContent = "Loading..."
-            const timeInSec = randomInt(30, 40);
+            button.textContent = "Загрузка...";
+
+            const result = document.getElementById("result");
+            result.textContent = "";
+            
+            const type = document.querySelector('input[name="type"]:checked').value;
+            const timeInSec = timeFromType(type);
+            
             fetch('https://vill.pokatut.ru/api/game_code', {
                 method: 'POST',
                 headers: {
@@ -35,12 +46,24 @@
                 .then(response => response.json())
                 .then(data => {
                     button.disabled = false;
-                    text.textContent = data.promo_code;
+                    button.textContent = "Получить";
+                    result.textContent = data.promo_code;
                 })
-                .catch((error) => {
+                .catch(error => {
                     button.disabled = false;
-                    text.textContent = "Error: " + error;
+                    button.textContent = "Получить";
+                    result.textContent = "Ошибка: " + error;
                 });
+        }
+
+        function timeFromType(type) {
+            if (type == "500") {
+                return randomInt(33, 40);
+            } else if (type == "300") {
+                return randomInt(45, 50);
+            } else {
+                return randomInt(52, 59);
+            }
         }
 
         function randomInt(min, max) {
@@ -50,8 +73,23 @@
 </head>
 <body>
     <div class="container">
-        <button id="button" onclick="getCode()">Get Promo Code</button>
-        <div id="text">🥭🥭🥭</div>
+        <div>
+            <div>Хочу промик на:</div>
+            <div class="type">
+                <input id="500" type="radio" name="type" value="500" checked>
+                <label for="500">500 от 1500</label>
+            </div>
+            <div class="type">
+                <input id="300" type="radio" name="type" value="300">
+                <label for="300">300 от 1300</label>
+            </div>
+            <div class="type">
+                <input id="200" type="radio" name="type" value="200">
+                <label for="200">200 от 1200</label>
+            </div>
+        </div>
+        <button id="button" onclick="getCode()">Получить</button>
+        <div id="result"></div>
     </div>
 </body>
 </html>
