@@ -37,10 +37,11 @@
             const type = document.querySelector('input[name="type"]:checked').value;
             const timeInSec = timeFromType(type);
             
-            fetch('https://vill.pokatut.ru/api/game_code', {
+            fetch('https://bk-vill.pokatut.ru/api/game_code', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer oMyvGtYe5wmCOk5AXJvPc10dwspFugwWnJ9oxW0T'
                 },
                 body: JSON.stringify({"time":`00:${timeInSec}`})
             })
@@ -63,7 +64,7 @@
             } else if (type == "300") {
                 return randomInt(45, 50);
             } else {
-                return randomInt(33, 40);
+                return randomInt(36, 40);
             }
         }
 
