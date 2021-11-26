@@ -35,21 +35,14 @@
             result.textContent = "";
             
             const type = document.querySelector('input[name="type"]:checked').value;
-            const timeInSec = timeFromType(type);
+            const promoCodeValue = promoCodeValueFromType(type);
             
-            fetch('https://fathomless-river-09373.herokuapp.com/https://bk-vill.pokatut.ru/api/game_code', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer oMyvGtYe5wmCOk5AXJvPc10dwspFugwWnJ9oxW0T'
-                },
-                body: JSON.stringify({"time":`00:${timeInSec}`})
-            })
-                .then(response => response.json())
+            fetch(`/promocode/${promoCodeValue}`)
+                .then(response => response.text())
                 .then(data => {
                     button.disabled = false;
                     button.textContent = "Получить";
-                    result.textContent = data.promo_code;
+                    result.textContent = data;
                 })
                 .catch(error => {
                     button.disabled = false;
@@ -58,18 +51,14 @@
                 });
         }
 
-        function timeFromType(type) {
+        function promoCodeValueFromType(type) {
             if (type == "200") {
-                return randomInt(52, 59);
+                return 200;
             } else if (type == "300") {
-                return randomInt(45, 50);
+                return 300;
             } else {
-                return randomInt(36, 40);
+                return 500;
             }
-        }
-
-        function randomInt(min, max) {
-            return Math.floor(Math.random() * (max - min)) + min;
         }
     </script>
 </head>
