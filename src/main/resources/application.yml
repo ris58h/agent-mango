@@ -1,8 +1,6 @@
 micronaut:
   application:
     name: agent-mango
-  server:
-    port: 80
   router:
     static-resources:
       default:

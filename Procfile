@@ -1,0 +1,1 @@
+web: java -Dmicronaut.server.port=$PORT $JAVA_OPTS -jar target/agent-mango-*.jar
