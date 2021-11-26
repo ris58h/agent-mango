@@ -1,99 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta http-equiv="refresh" content="0; url=https://agent-mango.herokuapp.com/" />
     <meta charset="utf-8">
     <style>
-        .description {
-            font-size: 2vmin;
-        }
         .container {
             display: flex;
-            flex-direction: column;
+            flex-direction: center;
             align-items: center;
-            margin-top: 8vmin;
-            font-size: 8vmin;
-        }
-        .type > input[type=radio] {
-            height: 4vmin;
-            width: 4vmin;
-        }
-        #button {
-            margin-top: 4vmin;
-            padding: 4vmin;
-            font-size: 8vmin;
-        }
-        #result {
-            margin-top: 4vmin;
         }
     </style>
-    <script>
-        function getCode() {
-            const button = document.getElementById("button");
-            button.disabled = true;
-            button.textContent = "Загрузка...";
-
-            const result = document.getElementById("result");
-            result.textContent = "";
-            
-            const type = document.querySelector('input[name="type"]:checked').value;
-            const timeInSec = timeFromType(type);
-            
-            fetch('https://fathomless-river-09373.herokuapp.com/https://bk-vill.pokatut.ru/api/game_code', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer oMyvGtYe5wmCOk5AXJvPc10dwspFugwWnJ9oxW0T'
-                },
-                body: JSON.stringify({"time":`00:${timeInSec}`})
-            })
-                .then(response => response.json())
-                .then(data => {
-                    button.disabled = false;
-                    button.textContent = "Получить";
-                    result.textContent = data.promo_code;
-                })
-                .catch(error => {
-                    button.disabled = false;
-                    button.textContent = "Получить";
-                    result.textContent = "Ошибка: " + error;
-                });
-        }
-
-        function timeFromType(type) {
-            if (type == "200") {
-                return randomInt(52, 59);
-            } else if (type == "300") {
-                return randomInt(45, 50);
-            } else {
-                return randomInt(36, 40);
-            }
-        }
-
-        function randomInt(min, max) {
-            return Math.floor(Math.random() * (max - min)) + min;
-        }
-    </script>
 </head>
 <body>
-    <div class="description">Срок проведения Акции 15.11.2021 – 30.11.2021</div>
-    <div class="container">
-        <div>
-            <div>Хочу промик на:</div>
-            <div class="type">
-                <input id="500" type="radio" name="type" value="500" checked>
-                <label for="500">500 от 1500</label>
-            </div>
-            <div class="type">
-                <input id="300" type="radio" name="type" value="300">
-                <label for="300">300 от 1300</label>
-            </div>
-            <div class="type">
-                <input id="200" type="radio" name="type" value="200">
-                <label for="200">200 от 1200</label>
-            </div>
-        </div>
-        <button id="button" onclick="getCode()">Получить</button>
-        <div id="result"></div>
-    </div>
+    <div class="container">Загрузка...</div>
 </body>
 </html>
